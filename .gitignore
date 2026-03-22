@@ -1,0 +1,4 @@
+temporary screenshots/
+tmp_puppet/
+node_modules/
+*.output
