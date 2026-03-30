@@ -773,44 +773,130 @@
       gap: 18px;
     }
 
-    /* First card spans 2 columns as featured */
+    /* Featured hero card — spans full width */
     .project-card:first-child {
-      grid-column: span 2;
-      display: flex;
-      flex-direction: row;
-      gap: 28px;
-      align-items: flex-start;
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 0;
+      align-items: stretch;
+      padding: 0;
+      overflow: hidden;
+      border-color: rgba(0,207,255,0.25);
+      box-shadow: 0 0 0 1px rgba(0,207,255,0.12), 0 24px 60px rgba(0,0,0,0.45), 0 0 80px rgba(0,207,255,0.06);
+      min-height: 380px;
+    }
+    .project-card:first-child::before {
+      opacity: 1;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--purple), var(--accent));
+      background-size: 200% 100%;
+      animation: shimmer-bar 3s linear infinite;
+    }
+    @keyframes shimmer-bar {
+      0%   { background-position: 0% 0%; }
+      100% { background-position: 200% 0%; }
     }
     .project-card:first-child .project-thumb {
-      width: 52%;
-      flex-shrink: 0;
+      width: 100%;
+      height: 100%;
+      aspect-ratio: unset;
       margin-bottom: 0;
-      aspect-ratio: 16/9;
+      border-radius: 0;
+      cursor: zoom-in;
+      position: relative;
+    }
+    .project-card:first-child .project-thumb img {
+      object-fit: cover;
+      object-position: center top;
+      height: 100%;
+      width: 100%;
+    }
+    .project-card:first-child .project-thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 70%, rgba(14,17,23,0.85) 100%);
+      pointer-events: none;
     }
     .project-card:first-child .project-body {
-      flex: 1;
-      padding-top: 4px;
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--bg-card);
+      position: relative;
+    }
+    .project-card:first-child .project-body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 100% 0%, rgba(0,207,255,0.07) 0%, transparent 60%);
+      pointer-events: none;
     }
     .project-card:first-child .project-title {
-      font-size: 1.18rem;
+      font-size: 1.45rem;
+      line-height: 1.25;
+      margin-bottom: 12px;
     }
     .project-card:first-child .project-num {
-      font-size: 0.72rem;
-      opacity: 0.7;
+      display: none;
+    }
+    .project-card:first-child .project-desc {
+      font-size: 0.92rem;
+      line-height: 1.75;
+      opacity: 0.82;
+    }
+    /* Featured badge */
+    .featured-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(0,207,255,0.1);
+      border: 1px solid rgba(0,207,255,0.25);
+      border-radius: 20px;
+      padding: 4px 12px;
+      margin-bottom: 16px;
+      width: fit-content;
+    }
+    .featured-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.7); }
     }
     @media (max-width: 1024px) {
       .project-card:first-child {
-        grid-column: span 2;
+        grid-template-columns: 1fr 360px;
+        min-height: 320px;
       }
     }
     @media (max-width: 768px) {
       .project-card:first-child {
         grid-column: span 1;
-        flex-direction: column;
+        grid-template-columns: 1fr;
+        min-height: unset;
       }
       .project-card:first-child .project-thumb {
-        width: 100%;
-        margin-bottom: 20px;
+        height: 220px;
+      }
+      .project-card:first-child .project-thumb::after {
+        background: linear-gradient(180deg, transparent 60%, rgba(14,17,23,0.85) 100%);
+      }
+      .project-card:first-child .project-body {
+        padding: 28px 24px;
       }
     }
 
@@ -1802,69 +1888,76 @@
     const PROJECTS = [
       {
         num: '01',
+        title: 'Multichannel AI Support System',
+        description: 'An AI-powered customer support chatbot that answers product questions, handles FAQs, and automatically escalates complex issues to a human agent. Built with a knowledge base that the AI searches in real time — so every response is accurate and grounded in actual business data. Works on any platform the business is already on — website, Messenger, email, and more.',
+        tags: ['AI', 'Multichannel', 'Live Chat', 'Facebook', 'WhatsApp', 'CRM'],
+        image: '/images/Multichannel AI Support System.png'
+      },
+      {
+        num: '02',
         title: 'AI Receptionist',
         description: 'Calendar management AI handling availability checks, bookings, updates, cancellations, and confirmations across email and messaging apps — always on, never overwhelmed.',
         tags: ['AI', 'Calendar', 'Email', 'Messaging'],
         image: '/images/AI Receptionist.png'
       },
       {
-        num: '02',
+        num: '03',
         title: 'AI Job Scraper & Resume Optimizer',
         description: 'Searches job boards, extracts data, and auto-generates tailored resumes — enabling clients to submit 50+ optimized applications weekly without manual effort.',
         tags: ['AI', 'Web Scraping', 'Resume Generation'],
         image: '/images/AI Job Scraper and Resume Optimizer.png'
       },
       {
-        num: '03',
+        num: '04',
         title: 'AI Content Repurposing System',
         description: 'Transcribes videos, generates blog posts, and auto-publishes to Facebook and LinkedIn — saving content creators 15+ hours per piece of content.',
         tags: ['AI', 'Video Transcription', 'Facebook', 'LinkedIn'],
         image: '/images/AI Content Repurposing.png'
       },
       {
-        num: '04',
+        num: '05',
         title: 'Gmail Attachment Storage Automation',
         description: 'Analyzes incoming email files, generates smart file names, logs everything in Google Sheets, and sends instant notifications — zero manual filing required.',
         tags: ['Gmail', 'Google Sheets', 'Automation'],
         image: '/images/Email Attachment Storage Automation.png'
       },
       {
-        num: '05',
+        num: '06',
         title: 'Automated Leads Enrichment Workflow',
         description: 'Apollo-powered pipeline that scores, routes, and notifies teams via Slack and Gmail while drafting personalized client emails — boosting conversion follow-up speed.',
         tags: ['Apollo', 'Slack', 'Gmail', 'CRM'],
         image: '/images/Automated Leads Enrichment.png'
       },
       {
-        num: '06',
+        num: '07',
         title: 'RAG-Powered AI Agent',
         description: 'Built with Supabase Vector Store and Google Gemini for intelligent document querying and automated responses across client files — accurate answers at scale.',
         tags: ['Supabase', 'Google Gemini', 'RAG', 'AI'],
         image: '/images/RAG Model.png'
       },
       {
-        num: '07',
+        num: '08',
         title: 'Facebook AI Chatbot',
         description: 'Webhook-integrated chatbot with knowledge base filtering and Google Gemini delivering 24/7 accurate customer support and lead capture on Facebook.',
         tags: ['Facebook', 'Webhooks', 'Google Gemini', 'AI'],
         image: '/images/FB AI Chatbot.png'
       },
       {
-        num: '08',
+        num: '09',
         title: 'AI Video Content Creator',
         description: 'Scheduled system using Google Gemini that generates scripts and auto-uploads finished videos to Facebook and YouTube — fully hands-off content production.',
         tags: ['Google Gemini', 'Facebook', 'YouTube', 'Automation'],
         image: '/images/AI Video Content Creator Generator.png'
       },
       {
-        num: '09',
+        num: '10',
         title: 'Xero → Asana Transaction Export',
         description: 'Automated transaction export workflow connecting Xero to Asana via CSV processing and Google Sheets, creating real-time tasks and eliminating manual accounting data entry for clients.',
         tags: ['Xero', 'Asana', 'Google Sheets', 'CSV'],
         image: '/images/Automated Export Account Transactions.png'
       },
       {
-        num: '10',
+        num: '11',
         title: 'CRM Lead Engagement Workflow',
         description: 'Multi-path Asana and Gmail automation delivering personalized follow-ups, welcome sequences, and status-based actions for higher close rates.',
         tags: ['Asana', 'Gmail', 'CRM', 'Marketing Automation'],
@@ -1918,9 +2011,11 @@
       const grid = document.getElementById('projects-grid');
       grid.innerHTML = PROJECTS.map((p, i) => {
         const delay = (i % 3) + 1;
-        // Encode spaces for valid HTML src and JS string
         const src   = p.image.replace(/ /g, '%20');
         const title = p.title.replace(/'/g, '&#39;');
+        const featuredBadge = i === 0
+          ? `<div class="featured-badge">Featured Project</div>`
+          : '';
         return `
           <div class="project-card" data-anim data-delay="${delay}">
             <div class="project-thumb" onclick="window.openLightbox('${src}','${p.title}')" role="button" tabindex="0" aria-label="View ${title} full size">
@@ -1934,6 +2029,7 @@
               </div>
             </div>
             <div class="project-body">
+              ${featuredBadge}
               <div class="project-num">${p.num}</div>
               <div class="project-title">${p.title}</div>
               <div class="project-desc">${p.description}</div>
