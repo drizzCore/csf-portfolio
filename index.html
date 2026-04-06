@@ -989,6 +989,60 @@
     .project-thumb:hover .project-thumb-overlay { opacity: 1; }
     .project-thumb:hover img { transform: scale(1.04); }
 
+    /* Carousel */
+    .carousel-thumb { cursor: pointer; }
+    .carousel-track { position: relative; width: 100%; height: 100%; }
+    .carousel-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.45s var(--ease-smooth);
+      pointer-events: none;
+    }
+    .carousel-slide.active { opacity: 1; pointer-events: auto; }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(14,17,23,0.7);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      cursor: pointer;
+      z-index: 3;
+      transition: background 0.2s, border-color 0.2s;
+      backdrop-filter: blur(6px);
+    }
+    .carousel-btn:hover { background: var(--accent); border-color: var(--accent); }
+    .carousel-prev { left: 10px; }
+    .carousel-next { right: 10px; }
+    .carousel-dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 3;
+    }
+    .carousel-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      padding: 0;
+    }
+    .carousel-dot.active { background: var(--accent); transform: scale(1.3); }
+
     .project-body { flex: 1; }
 
     /* Lightbox */
@@ -1081,6 +1135,30 @@
       outline: 2px solid var(--accent);
       outline-offset: 2px;
     }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text-primary);
+      font-size: 1.2rem;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s var(--ease-spring);
+      backdrop-filter: blur(6px);
+    }
+    .lightbox-nav:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-50%) scale(1.1); }
+    .lightbox-prev { left: 16px; }
+    .lightbox-next { right: 16px; }
+    .lightbox.has-nav .lightbox-nav { display: flex; }
 
     .project-num {
       font-family: var(--font-display);
@@ -1871,6 +1949,8 @@
         <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
       </svg>
     </button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous image">&#8592;</button>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next image">&#8594;</button>
     <div class="lightbox-content">
       <img class="lightbox-img" id="lightboxImg" src="" alt="">
       <div class="lightbox-caption" id="lightboxCaption"></div>
@@ -1891,80 +1971,91 @@
         title: 'Multichannel AI Support System',
         description: 'An AI-powered customer support chatbot that answers product questions, handles FAQs, and automatically escalates complex issues to a human agent. Built with a knowledge base that the AI searches in real time — so every response is accurate and grounded in actual business data. Works on any platform the business is already on — website, Messenger, email, and more.',
         tags: ['AI', 'Multichannel', 'Live Chat', 'Facebook', 'WhatsApp', 'CRM'],
-        image: '/images/Multichannel AI Support System.png'
+        image: '/images/Multichannel AI Support System.png',
+        images: [
+          { src: '/images/Multichannel AI Support System.png',                    label: 'Multichannel AI Support System (query pipeline)'  },
+          { src: '/images/Multichannel AI Support System (Knowledge Ingestion).png', label: 'Multichannel AI Support System (ingest pipeline)' }
+        ]
       },
       {
         num: '02',
+        title: 'AI Social Media Content Pipeline',
+        description: 'An AI-powered social media automation system that generates and publishes daily content to Facebook and Instagram — fully hands-free. Reads images from a content queue, uses computer vision to analyze each photo, and generates warm, brand-aligned captions automatically. Built with a Google Drive queue system that the AI searches in real time — so every post is grounded in actual visual content. Runs on a scheduled pipeline — no manual posting, no missed days.',
+        tags: ['AI', 'Computer Vision', 'Facebook', 'Instagram', 'Google Drive', 'n8n'],
+        image: '/images/AI Social Media Content Pipeline.png'
+      },
+      {
+        num: '04',
         title: 'AI Meeting Operating System',
         description: 'An AI-powered meeting automation system that automatically transcribes calls, generates structured summaries, and assigns action items to team members — without any manual note taking. Built on a webhook-triggered pipeline that processes every meeting in real time so nothing gets lost after a call ends. Works across any meeting platform the team is already using — Google Meet, Zoom, and more.',
         tags: ['AI Automation', 'Transcription', 'Claude API', 'Make.com', 'Notion'],
         image: '/images/AI Meeting Operating System.png'
       },
       {
-        num: '03',
+        num: '05',
         title: 'AI Receptionist',
         description: 'Calendar management AI handling availability checks, bookings, updates, cancellations, and confirmations across email and messaging apps — always on, never overwhelmed.',
         tags: ['AI', 'Calendar', 'Email', 'Messaging'],
         image: '/images/AI Receptionist.png'
       },
       {
-        num: '04',
+        num: '06',
         title: 'AI Job Scraper & Resume Optimizer',
         description: 'Searches job boards, extracts data, and auto-generates tailored resumes — enabling clients to submit 50+ optimized applications weekly without manual effort.',
         tags: ['AI', 'Web Scraping', 'Resume Generation'],
         image: '/images/AI Job Scraper and Resume Optimizer.png'
       },
       {
-        num: '05',
+        num: '07',
         title: 'AI Content Repurposing System',
         description: 'Transcribes videos, generates blog posts, and auto-publishes to Facebook and LinkedIn — saving content creators 15+ hours per piece of content.',
         tags: ['AI', 'Video Transcription', 'Facebook', 'LinkedIn'],
         image: '/images/AI Content Repurposing.png'
       },
       {
-        num: '06',
+        num: '08',
         title: 'Gmail Attachment Storage Automation',
         description: 'Analyzes incoming email files, generates smart file names, logs everything in Google Sheets, and sends instant notifications — zero manual filing required.',
         tags: ['Gmail', 'Google Sheets', 'Automation'],
         image: '/images/Email Attachment Storage Automation.png'
       },
       {
-        num: '07',
+        num: '09',
         title: 'Automated Leads Enrichment Workflow',
         description: 'Apollo-powered pipeline that scores, routes, and notifies teams via Slack and Gmail while drafting personalized client emails — boosting conversion follow-up speed.',
         tags: ['Apollo', 'Slack', 'Gmail', 'CRM'],
         image: '/images/Automated Leads Enrichmant v2.png'
       },
       {
-        num: '08',
+        num: '10',
         title: 'RAG-Powered AI Agent',
         description: 'Built with Supabase Vector Store and Google Gemini for intelligent document querying and automated responses across client files — accurate answers at scale.',
         tags: ['Supabase', 'Google Gemini', 'RAG', 'AI'],
         image: '/images/RAG Model.png'
       },
       {
-        num: '09',
+        num: '11',
         title: 'Facebook AI Chatbot',
         description: 'Webhook-integrated chatbot with knowledge base filtering and Google Gemini delivering 24/7 accurate customer support and lead capture on Facebook.',
         tags: ['Facebook', 'Webhooks', 'Google Gemini', 'AI'],
         image: '/images/FB AI Chatbot.png'
       },
       {
-        num: '10',
+        num: '12',
         title: 'AI Video Content Creator',
         description: 'Scheduled system using Google Gemini that generates scripts and auto-uploads finished videos to Facebook and YouTube — fully hands-off content production.',
         tags: ['Google Gemini', 'Facebook', 'YouTube', 'Automation'],
         image: '/images/AI Video Content Creator Generator.png'
       },
       {
-        num: '11',
+        num: '13',
         title: 'Xero → Asana Transaction Export',
         description: 'Automated transaction export workflow connecting Xero to Asana via CSV processing and Google Sheets, creating real-time tasks and eliminating manual accounting data entry for clients.',
         tags: ['Xero', 'Asana', 'Google Sheets', 'CSV'],
         image: '/images/Automated Export Account Transactions.png'
       },
       {
-        num: '12',
+        num: '14',
         title: 'CRM Lead Engagement Workflow',
         description: 'Multi-path Asana and Gmail automation delivering personalized follow-ups, welcome sequences, and status-based actions for higher close rates.',
         tags: ['Asana', 'Gmail', 'CRM', 'Marketing Automation'],
@@ -2023,8 +2114,35 @@
         const featuredBadge = i === 0
           ? `<div class="featured-badge">Featured Project</div>`
           : '';
-        return `
-          <div class="project-card" data-anim data-delay="${delay}">
+
+        const hasCarousel = p.images && p.images.length > 1;
+        let thumbHTML;
+        if (hasCarousel) {
+          const slides = p.images.map((img, idx) => {
+            const s = img.src.replace(/ /g, '%20');
+            return `<div class="carousel-slide${idx === 0 ? ' active' : ''}" data-idx="${idx}">
+              <img src="${s}" alt="${img.label}" loading="lazy" style="pointer-events:none;display:block;width:100%;height:100%;object-fit:cover;object-position:top center;">
+            </div>`;
+          }).join('');
+          const dots = p.images.map((img, idx) =>
+            `<button class="carousel-dot${idx === 0 ? ' active' : ''}" data-idx="${idx}" aria-label="${img.label}"></button>`
+          ).join('');
+          thumbHTML = `
+            <div class="project-thumb carousel-thumb" aria-label="View ${title} full size">
+              <div class="carousel-track">${slides}</div>
+              <button class="carousel-btn carousel-prev" aria-label="Previous">&#8592;</button>
+              <button class="carousel-btn carousel-next" aria-label="Next">&#8594;</button>
+              <div class="carousel-dots">${dots}</div>
+              <div class="project-thumb-overlay" style="pointer-events:none;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                  <line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/>
+                </svg>
+                <span>View Full Size</span>
+              </div>
+            </div>`;
+        } else {
+          thumbHTML = `
             <div class="project-thumb" onclick="window.openLightbox('${src}','${p.title}')" role="button" tabindex="0" aria-label="View ${title} full size">
               <img src="${src}" alt="${title}" loading="lazy" style="pointer-events:none;display:block;width:100%;height:100%;object-fit:cover;object-position:top center;">
               <div class="project-thumb-overlay" style="pointer-events:none;">
@@ -2034,7 +2152,12 @@
                 </svg>
                 <span>View Full Size</span>
               </div>
-            </div>
+            </div>`;
+        }
+
+        return `
+          <div class="project-card" data-anim data-delay="${delay}">
+            ${thumbHTML}
             <div class="project-body">
               ${featuredBadge}
               <div class="project-num">${p.num}</div>
@@ -2047,6 +2170,37 @@
           </div>
         `;
       }).join('');
+
+      // Init carousels
+      document.querySelectorAll('.carousel-thumb').forEach(thumb => {
+        const track  = thumb.querySelector('.carousel-track');
+        const slides = thumb.querySelectorAll('.carousel-slide');
+        const dots   = thumb.querySelectorAll('.carousel-dot');
+        let current  = 0;
+
+        function goTo(idx) {
+          slides[current].classList.remove('active');
+          dots[current].classList.remove('active');
+          current = (idx + slides.length) % slides.length;
+          slides[current].classList.add('active');
+          dots[current].classList.add('active');
+        }
+
+        thumb.querySelector('.carousel-prev').addEventListener('click', (e) => { e.stopPropagation(); goTo(current - 1); });
+        thumb.querySelector('.carousel-next').addEventListener('click', (e) => { e.stopPropagation(); goTo(current + 1); });
+        dots.forEach(dot => dot.addEventListener('click', (e) => { e.stopPropagation(); goTo(+dot.dataset.idx); }));
+
+        // Click active slide to open lightbox with full image set
+        const allImages = Array.from(slides).map(s => ({
+          src:   s.querySelector('img').getAttribute('src'),
+          title: s.querySelector('img').alt
+        }));
+        thumb.addEventListener('click', (e) => {
+          if (e.target.closest('.carousel-btn') || e.target.closest('.carousel-dot')) return;
+          const activeSrc = slides[current].querySelector('img').src;
+          window.openLightbox(activeSrc, slides[current].querySelector('img').alt, allImages);
+        });
+      });
     }
 
     /* ============================================================
@@ -2209,13 +2363,31 @@
     ============================================================ */
 
     // Attach to window so onclick attributes in dynamic HTML can always reach it
-    window.openLightbox = function(src, title) {
-      var lb  = document.getElementById('lightbox');
+    var _lbImages = [];
+    var _lbIndex  = 0;
+
+    function lbShow(idx) {
       var img = document.getElementById('lightboxImg');
       var cap = document.getElementById('lightboxCaption');
-      img.src = src;
-      img.alt = title;
-      cap.textContent = title;
+      _lbIndex = (idx + _lbImages.length) % _lbImages.length;
+      img.src = _lbImages[_lbIndex].src;
+      img.alt = _lbImages[_lbIndex].title;
+      cap.textContent = _lbImages[_lbIndex].title;
+    }
+
+    window.openLightbox = function(src, title, images) {
+      var lb = document.getElementById('lightbox');
+      if (images && images.length > 1) {
+        _lbImages = images;
+        _lbIndex  = images.findIndex(function(im) { return im.src === src; });
+        if (_lbIndex < 0) _lbIndex = 0;
+        lb.classList.add('has-nav');
+      } else {
+        _lbImages = [{ src: src, title: title }];
+        _lbIndex  = 0;
+        lb.classList.remove('has-nav');
+      }
+      lbShow(_lbIndex);
       lb.classList.add('open');
       document.body.style.overflow = 'hidden';
     };
@@ -2223,15 +2395,20 @@
     window.closeLightbox = function() {
       var lb  = document.getElementById('lightbox');
       var img = document.getElementById('lightboxImg');
-      lb.classList.remove('open');
+      lb.classList.remove('open', 'has-nav');
       document.body.style.overflow = '';
       img.src = '';
+      _lbImages = [];
     };
 
     document.getElementById('lightboxClose').addEventListener('click', window.closeLightbox);
     document.getElementById('lightboxBackdrop').addEventListener('click', window.closeLightbox);
+    document.getElementById('lightboxPrev').addEventListener('click', function() { lbShow(_lbIndex - 1); });
+    document.getElementById('lightboxNext').addEventListener('click', function() { lbShow(_lbIndex + 1); });
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') window.closeLightbox();
+      if (e.key === 'ArrowLeft'  && _lbImages.length > 1) lbShow(_lbIndex - 1);
+      if (e.key === 'ArrowRight' && _lbImages.length > 1) lbShow(_lbIndex + 1);
     });
 
     // Fallback: document-level click delegation for any missed thumb clicks
